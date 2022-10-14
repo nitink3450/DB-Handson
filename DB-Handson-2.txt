@@ -1,3 +1,13 @@
+[
+db.employee.find({salary:{$gt:"30000"}})
+
+db.employee.find({yearGrad:{$gt:"2015"},overallExp:{$gt:"1"}})
+
+db.employee.updateMany({salary:{$gt:"70000"}},{$set:{salary:"65000"}})
+
+db.employee.deleteMany({lastCompany:"Y"})
+]
+
 test> use Human_Resource1
 switched to db Human_Resource1
 Human_Resource1> db.employee.insertMany([{
