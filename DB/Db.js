@@ -1,7 +1,7 @@
 const MongoClient = require("mongodb").MongoClient
 const emplyoeeData = require("./Data.json");
 const Connection = "mongodb://127.0.0.1:27017"
-MongoClient.connect(Connection, async (err, db) => {
+MongoClient.connect(Connection, async (err, db1) => {
     if (err) {
         console.log("Error while connnecting", err)
         // return;
@@ -9,20 +9,21 @@ MongoClient.connect(Connection, async (err, db) => {
     else {
         console.log("Connection Successful")
     }
-    const Database = db.db("Human_Resource");
-    const DbConnection = Database.collection("employee")
+
+    const Database = db1.db("Human_Resource");
+    const Dbcollection = Database.collection("employee")
     console.log("Connected to MongoDataBase");
     const inserting = await Database.collection("employee").insertMany(emplyoeeData);
     console.log(inserting);
-    const Finding = await DbConnection.find().toArray();
+    const Finding = await Dbcollection.find().toArray();
     console.log(Finding);
-    const Fsalary = await DbConnection.find({ salary: { $gt: "30000" } }).toArray();
+    const Fsalary = await Dbcollection.find({ salary: { $gt: "30000" } }).toArray();
     console.log(Fsalary);
-    const Oexp = await DbConnection.find({ yearGrad: { $gt: "2015" }, overallExp: { $gt: "1" } });
+    const Oexp = await Dbcollection.find({ yearGrad: { $gt: "2015" }, overallExp: { $gt: "1" } }).toArray();
     console.log(Oexp);
-    const UpdateSalary = await DbConnection.updateMany({ salary: { $gt: "70000" } }, { $set: { salary: "65000" } });
+    const UpdateSalary = await Dbcollection.updateMany({ salary: { $gt: "70000" } }, { $set: { salary: "65000" } });
     console.log(UpdateSalary);
-    const DeleteY = await DbConnection.deleteMany({ lastCompany: "Y" });
+    const DeleteY = await Dbcollection.deleteMany({ lastCompany: "Y" });
     console.log(DeleteY);
 })
 
